@@ -1,9 +1,9 @@
 import streamlit as st
-from streamlit_chat import message
 import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import json
+
 
 @st.cache(allow_output_mutation=True)
 def cached_model():
@@ -41,8 +41,8 @@ if submitted and user_input:
     st.session_state.past.append(user_input)
     st.session_state.generated.append(answer["챗봇"])
 
+message = st.container()
 for i in range(len(st.session_state["past"])):
-    message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+    message.text("사용자: " + st.session_state["past"][i])
     if len(st.session_state["generated"]) > i:
-        message(st.session_state["generated"][i], key=str(i) + "_bot")
-        
+        message.text("상담사: " + st.session_state["generated"][i])
