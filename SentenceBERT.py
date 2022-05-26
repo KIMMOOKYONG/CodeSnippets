@@ -41,8 +41,15 @@ if submitted and user_input:
     st.session_state.past.append(user_input)
     st.session_state.generated.append(answer["챗봇"])
 
-message = st.container()
+# message = st.container()
+# for i in range(len(st.session_state["past"])):
+#     message.text("사용자: " + st.session_state["past"][i])
+#     if len(st.session_state["generated"]) > i:
+#         message.text("상담사: " + st.session_state["generated"][i])
+
+message = st.empty()
 for i in range(len(st.session_state["past"])):
     message.text("사용자: " + st.session_state["past"][i])
     if len(st.session_state["generated"]) > i:
         message.text("상담사: " + st.session_state["generated"][i])
+
