@@ -4,14 +4,26 @@ import pandas as pd
 import plotly.express as px
 
 st.header("Fruits List")
-# ---- Creating Dictionary ----
-_dic = { 'Name': ['Mango', 'Apple', 'Banana'],
-         'Quantity': [45, 38, 90]}
+
+@st.experimental_memo(suppress_st_warning=True)
+def skipComputation():
+    # ---- Creating Dictionary ----
+    _dic = { 'Name': ['Mango', 'Apple', 'Banana'],
+            'Quantity': [45, 38, 90]}
+
+    _df = pd.DataFrame(_dic)
+    st.info("Only first time you will be seeing me!")
+    return _df   
 
 load = st.button('Load Data')
 
-if load:
-    _df = pd.DataFrame(_dic)
+# --- Initialising SessionState ---
+if "load_state" not in st.session_state:
+    st.session_state.load_state = False
+
+if load or st.session_state.load_state:
+    st.session_state.load_state = True
+    _df = skipComputation()
     st.write(_df)
 
     # ---- Plot types -------
